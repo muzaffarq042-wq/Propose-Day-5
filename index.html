@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Propose Day 💖</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: black;
+  overflow: hidden;
+}
+
+/* Screens */
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== BACKGROUND (NO BLUR) ===== */
+.bg1::before,
+.bg2::before,
+.bg3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  filter: brightness(0.6);
+  z-index: -2;
+}
+
+.bg1::after,
+.bg2::after,
+.bg3::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+/* Images */
+.bg1::before, .bg1::after { background-image: url("bg1.jpg"); }
+.bg2::before, .bg2::after { background-image: url("bg2.jpg"); }
+.bg3::before, .bg3::after { background-image: url("bg3.jpg"); }
+
+/* Card */
+.card {
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  color: white;
+  width: 85%;
+  max-width: 340px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Text */
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn {
+  margin-top: 20px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.next-btn,
+.yes-btn {
+  background: #ff4d6d;
+  color: white;
+}
+
+.no-btn {
+  background: #333;
+  color: white;
+  position: absolute;
+}
+
+/* ✨ Sparkles (ONLY these animate) */
+.sparkle {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.6;
+  animation: sparklePulse 2.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes sparklePulse {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.8; }
+  100% { opacity: 0.3; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<div class="screen bg1 active" id="screen1">
+  <div class="card">
+    <h1>Happy Propose Day 💖</h1>
+    <button class="btn next-btn" onclick="goTo(2)">Next ✨</button>
+  </div>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen bg2" id="screen2">
+  <div class="card" id="questionCard">
+    <h1>Will you be mine? 💖</h1>
+    <button class="btn yes-btn" onclick="goTo(3)">Yes 💖</button>
+    <button class="btn no-btn" id="noBtn">No ☹️</button>
+  </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen bg3" id="screen3">
+  <div class="card">
+    <h1>She said YES 🥳💖</h1>
+    <p>
+      Thank you for trusting me<br>
+      with your heart.<br><br>
+      I promise to choose you —<br>
+      not just today,<br>
+      but every single day 💖
+    </p>
+
+    <!-- ✨ Sparkles around card -->
+    <span class="sparkle" style="top:-10px; left:-10px;">✨</span>
+    <span class="sparkle" style="top:-10px; right:-10px;">✨</span>
+    <span class="sparkle" style="bottom:-10px; left:-10px;">✨</span>
+    <span class="sparkle" style="bottom:-10px; right:-10px;">✨</span>
+    <span class="sparkle" style="top:50%; left:-20px;">✨</span>
+  </div>
+</div>
+
+<script>
+function goTo(num) {
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById("screen" + num).classList.add("active");
+}
+
+/* No button movement */
+const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("questionCard");
+
+noBtn.addEventListener("click", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+function moveNo() {
+  const maxX = card.clientWidth - noBtn.clientWidth - 10;
+  const maxY = card.clientHeight - noBtn.clientHeight - 10;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+</script>
+
+</body>
+</html>
